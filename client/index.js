@@ -1,18 +1,16 @@
 (function () {
+
+    // つなぎ先
     var socketio = io.connect('http://127.0.0.1:3000');
 
-    var msgArea = document.getElementById("msg");
     var myName;
 
+    // socketio event
     socketio.on("connected", function(name) {});
     socketio.on("publish", function (data) {
-      addMessage(data.value);
+        addMessage(data.value);
     });
     socketio.on("disconnect", function () {});
-
-    function start(name) {
-        socketio.emit("connected", name);
-    }
 
     function addMessage (msg) {
 
@@ -23,6 +21,10 @@
     }
 
     var InputName = React.createClass({
+
+        /**
+         * 送信
+         */
         submit: function (e) {
             e.preventDefault();
 
@@ -30,13 +32,18 @@
             var name = input.value + Math.floor(Math.random() * 100);
             myName = name;
             addMessage('you are ' + name);
-            start(name);
+
+            socketio.emit("connected", name);
 
             React.render(
                 <InputMessage />,
                 document.getElementById('input-area')
             );
         },
+
+        /**
+         * 描画
+         */
         render: function () {
             return (
                 <form onSubmit={this.submit}>
@@ -51,6 +58,10 @@
     });
 
     var InputMessage = React.createClass({
+
+        /**
+         * 送信
+         */
         submit: function (e) {
             e.preventDefault();
 
@@ -60,6 +71,10 @@
             textInput.value = '';
 
         },
+
+        /**
+         * 描画
+         */
         render: function () {
             return (
                 <form onSubmit={this.submit}>
@@ -75,10 +90,16 @@
 
     var Comment = React.createClass({
 
+        /**
+         *
+         */
         getInitialState: function () {
             return {comments: []};
         },
 
+        /**
+         *
+         */
         render: function () {
             var msg = new Date().toLocaleTimeString() + ' ' + this.props.msg;
             var comments = this.state.comments || [];

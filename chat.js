@@ -4,11 +4,6 @@
  */
 
 var fs = require('fs');
-// var http = require('http').Server(function (req, res) {
-//     res.writeHead(200, {'Content-type': 'text/html'});
-//     var output = fs.readFileSync('./index.html', 'utf-8');
-//     res.end(output);
-// }).listen(3000);
 var path = require('path');
 var express = require('express');
 var app = express();
@@ -23,6 +18,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'client')));
 
+// router
 app.get('/', function (req, res) {
     res.writeHead(200, {'Content-type': 'text/html'});
     var output = fs.readFileSync('./index.html', 'utf-8');
@@ -33,6 +29,7 @@ var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+// socketio
 var io = require('socket.io')(server);
 
 var userHashs = {};
