@@ -15,11 +15,14 @@
     function addMessage (msg) {
 
         React.render(
-            <Comment  msg={msg} />,
+            <Message  msg={msg} />,
             document.getElementById('msg')
         );
     }
 
+    /**
+     * 名前入力
+     */
     var InputName = React.createClass({
 
         /**
@@ -57,6 +60,9 @@
         }
     });
 
+    /**
+     * メッセージ入力
+     */
     var InputMessage = React.createClass({
 
         /**
@@ -88,13 +94,16 @@
         }
     });
 
-    var Comment = React.createClass({
+    /**
+     * メッセージ一覧
+     */
+    var Message = React.createClass({
 
         /**
          *
          */
         getInitialState: function () {
-            return {comments: []};
+            return {messages: []};
         },
 
         /**
@@ -102,15 +111,13 @@
          */
         render: function () {
             var msg = new Date().toLocaleTimeString() + ' ' + this.props.msg;
-            var comments = this.state.comments || [];
-            comments.push(msg);
+            var messages = this.state.messages || [];
+            messages.push(msg);
 
-            // this.setState({comments: comments});
-
-            var nodes = this.state.comments.map(function (comment, index) {
+            var nodes = this.state.messages.map(function (message, index) {
                 return (
                     <div>
-                        {comment}
+                        {message}
                     </div>
                 );
             });
