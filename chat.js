@@ -18,9 +18,10 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'client')));
 
 // router
+var clientDir = './client/';
 app.get('/', function (req, res) {
     res.writeHead(200, {'Content-type': 'text/html'});
-    var output = fs.readFileSync('./index.html', 'utf-8');
+    var output = fs.readFileSync(clientDir + 'index.html', 'utf-8');
     res.end(output);
 });
 
